@@ -60,6 +60,19 @@ app.use('/', effects)
 let iden = require('../server/routes/identify.js');
 app.use('/', iden)
 
+//put globalOrientation
+let glOrienPut = require('../server/routes/putGlobal.js');
+app.use('/', glOrienPut)
+
+//put layout
+let layout = require('../server/routes/layout.js');
+app.use('/', layout)
+
+//put colorMode
+let colorMod = require('../server/routes/colorMode.js');
+app.use('/', colorMod)
+
+
 
 // ### TOKEN ### //
 
@@ -183,21 +196,6 @@ function onOff(bool) {
 
 //###API STATE ENDPOINT###//
 
-//get colorMode (on/off)
-app.get("/api/v1/:auth_token/state/colorMode", (req, res, next) => {
-    token = req.params.auth_token;
-    if (validtoken(token) != true) {
-        res.status(401);
-        res.json();
-    } else {
-        exporter.all(function (err, all) {
-            mode = Object.values(all.colorMode)[0].colorMode;
-            res.status(200);
-            res.json(mode);
-        });
-    }
-});
-
 //get brightness
 app.get("/api/v1/:auth_token/state/brightness", (req, res, next) => {
     token = req.params.auth_token;
@@ -263,59 +261,6 @@ app.get("/api/v1/:auth_token/state/hue", (req, res, next) => {
 
 //###API PANEL LAYOUT ENDPOINT###//
 
-//get layout
-app.get("/api/v1/:auth_token/panelLayout/layout", (req, res, next) => {
-    token = req.params.auth_token;
-    if (validtoken(token) != true) {
-        res.status(401);
-        res.json()
-    } else {
-        exporter.all(function (err, all) {
-            json = {
-                    "numPanels":Object.values(all.layout)[0].numPanels,
-                    "sideLength":Object.values(all.layout)[0].sideLength,
-                    "positionData": JSON.parse(Object.values(all.layout)[0].positionData)
-            }
-            res.json(json)
-        });
-    }
-});
-
-//Put globalOrientation
-app.put("/api/v1/:auth_token/panelLayout/globalOrientation", (req, res, next) => {
-    res.contentType('application/json');
-    token = req.params.auth_token;
-    if (validtoken(token) != true) {
-        res.status(401);
-        res.json()
-    } else {
-        try {
-            json = req.body;
-            selec = json.globalOrientation["value"]
-            if (selec >= 0 && selec <= 360) {
-                val = {
-                    "value": json.globalOrientation["value"],
-                    "max": 360,
-                    "min": 0
-                } 
-                db1.run('UPDATE panelLayout SET globalOrientation=?', [JSON.stringify(val)], function(err) {
-                    if (err) {
-                        return console.error(err.message);
-                    }
-                    rotate(json.globalOrientation["value"])
-                });
-                res.status(204);
-                res.json()
-            } else {
-                res.status(400);
-                res.json()
-            }
-        } catch {
-            res.status(422)
-            res.json()
-        }
-    }
-});
 
 // Flow 2+ chosen colors gradually mix into each other as if flowing paint is mixing	transTime, delay time, loop, LinDirection
 // Wheel Color gradient cycles across panels in a user specified direction	transTime, loop, LinDirection
@@ -326,7 +271,7 @@ app.put("/api/v1/:auth_token/panelLayout/globalOrientation", (req, res, next) =>
 //### SSDP SERVER NOTIFY ###//
 
 //show 3 ssdp device instead of one
-var Server = require('node-ssdp').Server, server = new Server({
+let Server = require('node-ssdp').Server, server = new Server({
   udn : 'uuid:123456-1234-1234-123456789abc',
   location: 'http://localhost:16021',
   ttl:60,
