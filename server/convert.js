@@ -93,7 +93,7 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
-//get index of element in palette
+//get index of element
 function findWithAttr(array, attr, value) {
     for(var i = 0; i < array.length; i += 1) {
         if(array[i][attr] === value) {

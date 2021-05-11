@@ -162,6 +162,7 @@ function latest() {
         ct = JSON.parse(Object.values(all.ct)[0].ct).value;
         type = Object.values(all.type)[0].type;
         light = (((ct - 1200) / 10.6) /10) + 50; //ct change lightness betwen 50 and 100% so, colorTemp - min / 10.6 (5300 / 50 = 106 so 10.6%) / 10 (to convert in %) + 50%
+        //this is stupid because it's supposed to use hsb but i use hsl, but too lazy to change that
         hue = JSON.parse(Object.values(all.hue)[0].hue).value;
         effect = Object.values(all.selects)[0].selects;
         brightness(Data, brightnes, 0);
