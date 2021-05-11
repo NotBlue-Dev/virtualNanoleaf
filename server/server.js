@@ -64,14 +64,29 @@ app.use('/', iden)
 let glOrienPut = require('../server/routes/putGlobal.js');
 app.use('/', glOrienPut)
 
-//put layout
+//get layout
 let layout = require('../server/routes/layout.js');
 app.use('/', layout)
 
-//put colorMode
+//get colorMode
 let colorMod = require('../server/routes/colorMode.js');
 app.use('/', colorMod)
 
+//get brightness
+let brightnesss = require('../server/routes/brightness.js');
+app.use('/', brightnesss)
+
+//get colorTemp
+let colorTemp = require('../server/routes/colorTemp.js');
+app.use('/', colorTemp)
+
+//get saturation
+let saturation = require('../server/routes/saturation.js');
+app.use('/', saturation)
+
+//get hue
+let hues = require('../server/routes/hue.js');
+app.use('/', hues)
 
 
 // ### TOKEN ### //
@@ -193,74 +208,6 @@ function onOff(bool) {
     } 
     
 }
-
-//###API STATE ENDPOINT###//
-
-//get brightness
-app.get("/api/v1/:auth_token/state/brightness", (req, res, next) => {
-    token = req.params.auth_token;
-    if (validtoken(token) != true) {
-        res.status(401);
-        res.json();
-    } else {
-        exporter.all(function (err, all) {
-            json = JSON.parse(Object.values(all.state)[0].brightness);
-            res.status(200);
-            res.json(json);
-        });
-    }
-});
-
-//get ct
-app.get("/api/v1/:auth_token/state/ct", (req, res, next) => {
-    token = req.params.auth_token;
-    if (validtoken(token) != true) {
-        res.status(401);
-        res.json();
-    } else {
-        exporter.all(function (err, all) {
-            json = JSON.parse(Object.values(all.ct)[0].ct);
-            res.status(200);
-            res.json(json);
-        });
-    }
-});
-
-//get sat
-app.get("/api/v1/:auth_token/state/sat", (req, res, next) => {
-    token = req.params.auth_token;
-    if (validtoken(token) != true) {
-        res.status(401);
-        res.json();
-    } else {
-        exporter.all(function (err, all) {
-            json = JSON.parse(Object.values(all.sat)[0].sat);
-            res.status(200);
-            res.json(json);
-        });
-    }
-});
-
-//get hue
-app.get("/api/v1/:auth_token/state/hue", (req, res, next) => {
-    token = req.params.auth_token;
-    if (validtoken(token) != true) {
-        res.status(401);
-        res.json();
-    } else {
-        exporter.all(function (err, all) {
-            json = JSON.parse(Object.values(all.hue)[0].hue);
-            res.status(200);
-            res.json(json);
-        });
-    }
-});
-
-//put state
-
-
-//###API PANEL LAYOUT ENDPOINT###//
-
 
 // Flow 2+ chosen colors gradually mix into each other as if flowing paint is mixing	transTime, delay time, loop, LinDirection
 // Wheel Color gradient cycles across panels in a user specified direction	transTime, loop, LinDirection
