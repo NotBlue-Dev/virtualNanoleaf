@@ -88,12 +88,18 @@ app.use('/', saturation)
 let hues = require('../server/routes/hue.js');
 app.use('/', hues)
 
+// Server port
+const HTTP_PORT = 16021;
 
-// ### TOKEN ### //
+// Start server
+app.listen(HTTP_PORT, () => {
+    console.log("Server running on port %PORT%".replace("%PORT%",HTTP_PORT));
+});
+
+//function
 
 let toke = [];
 
-//create list of valid token
 function setToken() {
     toke.splice(0, toke.length) ;   
     db1.each('SELECT token FROM users',[], function(err,row) {
@@ -109,18 +115,6 @@ setToken();
 function validtoken(tovalidate) {
     return toke.join(',').split(',').indexOf(tovalidate) > -1;
 }
-
-// ### SERVER SETTINGS ### //
-
-// Server port
-const HTTP_PORT = 16021;
-
-// Start server
-app.listen(HTTP_PORT, () => {
-    console.log("Server running on port %PORT%".replace("%PORT%",HTTP_PORT));
-});
-
-// ### NANOLEAF SETTING DISPLAY ### //
 
 function setState(bool) {
     db1.run('UPDATE one SET value=?', [bool], function(err) {
@@ -209,12 +203,6 @@ function onOff(bool) {
     
 }
 
-// Flow 2+ chosen colors gradually mix into each other as if flowing paint is mixing	transTime, delay time, loop, LinDirection
-// Wheel Color gradient cycles across panels in a user specified direction	transTime, loop, LinDirection
-
-// Fade	Colors cycle across panels in sync	transTime, delay time, loop
-// Explode	Similar to flow, but the colors move out from the centre of the panel system, rather than the edge	transTime, delay time, loop
-	
 //### SSDP SERVER NOTIFY ###//
 
 //show 3 ssdp device instead of one
@@ -228,3 +216,11 @@ let Server = require('node-ssdp').Server, server = new Server({
 server.addUSN('nanoleaf:nl29');
 
 server.start();
+
+
+// Flow 2+ chosen colors gradually mix into each other as if flowing paint is mixing	transTime, delay time, loop, LinDirection
+// Wheel Color gradient cycles across panels in a user specified direction	transTime, loop, LinDirection
+
+// Fade	Colors cycle across panels in sync	transTime, delay time, loop
+// Explode	Similar to flow, but the colors move out from the centre of the panel system, rather than the edge	transTime, delay time, loop
+	
