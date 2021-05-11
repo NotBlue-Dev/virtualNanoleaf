@@ -1,0 +1,47 @@
+const db1 = require('../database.js');
+const SqliteToJson = require('sqlite-to-json');
+const exporter = new SqliteToJson({
+    client: db1
+});
+
+module.exports = (function() {
+    'use strict';
+    let bodyParser = require('body-parser');
+    var router = require('express').Router();
+    router.use(bodyParser.urlencoded({
+        extended: true
+    }));
+    router.use(bodyParser.json());
+    router.put("/api/v1/:auth_token/identify", (req, res, next) => {
+        res.contentType('application/json');
+        let token = req.params.auth_token;
+        if (validtoken(token) != true) {
+            res.status(401);
+            res.json();
+        } else {
+            try {
+                exporter.all(function (err, all) {
+                    let mod = Object.values(all.colorMode)[0].colorMode;
+                    if (mod == "effect") {
+                        clearTimeout(effectTimeout);
+                        clearInterval(effectInterval);
+                        removeTrans(Data);
+                    }
+                    setState("true");
+                    identify(Data);
+                    setTimeout(() => {
+                        latest();
+                    }, 5000);
+                    res.status(204);
+                    res.json();
+                });
+    
+            } catch {
+                res.status(422);
+                res.json();
+            }
+        }
+    });
+    
+    return router;
+})();

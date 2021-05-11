@@ -1,0 +1,28 @@
+body {
+    background-color: #9ba7ad;
+}
+
+.panel {
+    background-color: #dadee1;
+    height: 96px;
+    width: 96px;
+    color: white;
+
+    border-width: 4px;
+    border-color: White;
+    border-style: solid;
+    border-radius: 5px;
+}
+
+#container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#frame {
+    margin-top: 42%;
+    display: block;
+    position: relative;
+    left: -302px;
+}

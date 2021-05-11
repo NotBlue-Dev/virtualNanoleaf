@@ -1,0 +1,30 @@
+{
+  "name": "virtual-nanoleaf",
+  "version": "1.0.0",
+  "description": "Virtual Nanoleaf Device",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "",
+  "keywords": [],
+  "author": "NotBlue",
+  "devDependencies": {
+    "electron": "^12.0.4"
+  },
+  "dependencies": {
+    "@achingbrain/ssdp": "^2.1.2",
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "color-temperature": "^0.2.7",
+    "express": "^4.17.1",
+    "inquirer": "^8.0.0",
+    "md5": "^2.3.0",
+    "node-ssdp": "^4.0.1",
+    "nodemon": "^2.0.7",
+    "server": "^1.0.32",
+    "sqlite-to-json": "^0.1.3",
+    "sqlite3": "^5.0.2",
+    "tinycolor2": "^1.4.2"
+  }
+}
