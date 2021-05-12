@@ -1,6 +1,7 @@
 
 const path = require('path');
-
+let ypos = [];
+let xpos = [];
 const fs = require('fs'); 
 input = JSON.parse(fs.readFileSync(path.join(__dirname, '../customPanel.json'), 'utf8'));
 Data = {"numPanels":input[0],"sideLength":input[1],"positionData":input[2]}
@@ -8,12 +9,12 @@ var tinycolor = require("tinycolor2");
 
 function createPanel(list) {
     positionData = list.positionData
-    xpos = [];
     for (let i in positionData) {
         id = positionData[i].panelId;
         x = positionData[i].x;
-        xpos.push(Math.ceil(x/100)*100);
         y = positionData[i].y;
+        xpos.push(Math.ceil(x/100)*100);
+        ypos.push(Math.ceil(y/100)*100);
         type = positionData[i].shapeType;
         div = document.createElement('div'); 
         div.className = 'panel cover';
@@ -56,7 +57,25 @@ function off(list) {
 
 function rotate(deg) {
     panel = document.getElementById('container');
-    // panel.style.transform = "rotate("+deg+"deg)"
+    panel.style.transform = "rotate("+deg+"deg)"
+    container = document.getElementById('container');
+    console.log(deg == 0)
+    if (deg != 0) {
+        high = Math.max(...ypos).toString()
+        if(high.length>3) {
+            if(high.split('0')[0].length>=2) {
+                end = high.split('0')[0]
+            } else {
+                end = high.split('0')[0] + "0"
+            }
+        } else {
+            end = high.split('0')[0]
+        }
+        container.style.height = Number(end)+1+"00px"
+    } else {
+        container.style.height = null;
+        
+    }
 }
 
 function brightness(list, val, dur=0) {
