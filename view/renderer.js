@@ -40,6 +40,18 @@ function createPanel(list) {
         end = high.split('0')[0]
     }
     container.style.width = Number(end)+1+"00px"
+    
+    height = Math.max(...ypos).toString()
+    if(height.length>3) {
+        if(height.split('0')[0].length>=2) {
+            yheight = height.split('0')[0]
+        } else {
+            yheight = height.split('0')[0] + "0"
+        }
+    } else {
+        yheight = height.split('0')[0]
+    }
+    container.style.height = Number(yheight)+1+"00px"
 }
 
 function off(list) {
@@ -58,24 +70,23 @@ function off(list) {
 function rotate(deg) {
     panel = document.getElementById('container');
     panel.style.transform = "rotate("+deg+"deg)"
-    container = document.getElementById('container');
-    console.log(deg == 0)
-    if (deg != 0) {
-        high = Math.max(...ypos).toString()
-        if(high.length>3) {
-            if(high.split('0')[0].length>=2) {
-                end = high.split('0')[0]
-            } else {
-                end = high.split('0')[0] + "0"
-            }
-        } else {
-            end = high.split('0')[0]
-        }
-        container.style.height = Number(end)+1+"00px"
-    } else {
-        container.style.height = null;
-        
-    }
+    // container = document.getElementById('container');
+    // console.log(deg == 0)
+    // if (deg != 0) {
+    //     high = Math.max(...ypos).toString()
+    //     if(high.length>3) {
+    //         if(high.split('0')[0].length>=2) {
+    //             end = high.split('0')[0]
+    //         } else {
+    //             end = high.split('0')[0] + "0"
+    //         }
+    //     } else {
+    //         end = high.split('0')[0]
+    //     }
+    //     container.style.height = Number(end)+1+"00px"
+    // } else {
+    //     container.style.height = null;
+    // }
 }
 
 function brightness(list, val, dur=0) {
