@@ -2,6 +2,13 @@ body {
     background-color: #9ba7ad;
 }
 
+body, #main {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
 .panel {
     background-color: #dadee1;
     height: 96px;
@@ -15,14 +22,19 @@ body {
 }
 
 #container {
-    display: flex;
-    align-items: center;
+    position: relative;
+    grid-column: 2;
+    grid-row: 2;
+    min-width: 1px;
+    min-height: 1px;
+}
+
+#main {
+    display: grid;
     justify-content: center;
 }
 
-#frame {
-    margin-top: 42%;
-    display: block;
-    position: relative;
-    left: -302px;
+#bottomright {
+    grid-column: 3;
+    grid-row: 3;
 }

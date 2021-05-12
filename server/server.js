@@ -218,7 +218,6 @@ server.addUSN('nanoleaf:nl29');
 
 server.start();
 
-
 // Flow 2+ chosen colors gradually mix into each other as if flowing paint is mixing	transTime, delay time, loop, LinDirection
 // Wheel Color gradient cycles across panels in a user specified direction	transTime, loop, LinDirection
 

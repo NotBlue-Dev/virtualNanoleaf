@@ -1,7 +1,6 @@
 
 const path = require('path');
 
-// Data = {"numPanels":24,"sideLength":0,"positionData":[{"panelId":4836,"x":100,"y":0,"o":0,"shapeType":3},{"panelId":47034,"x":0,"y":0,"o":270,"shapeType":2},{"panelId":49366,"x":100,"y":100,"o":0,"shapeType":2},{"panelId":63008,"x":0,"y":100,"o":0,"shapeType":2},{"panelId":7251,"x":199,"y":100,"o":270,"shapeType":2},{"panelId":50041,"x":200,"y":199,"o":270,"shapeType":2},{"panelId":7623,"x":100,"y":200,"o":270,"shapeType":2},{"panelId":23951,"x":0,"y":200,"o":360,"shapeType":2},{"panelId":11954,"x":200,"y":299,"o":270,"shapeType":2},{"panelId":45023,"x":100,"y":300,"o":270,"shapeType":2},{"panelId":49565,"x":0,"y":300,"o":360,"shapeType":2},{"panelId":15094,"x":300,"y":199,"o":270,"shapeType":2},{"panelId":46620,"x":300,"y":299,"o":540,"shapeType":2},{"panelId":21537,"x":400,"y":299,"o":810,"shapeType":2},{"panelId":5680,"x":500,"y":299,"o":810,"shapeType":2},{"panelId":52037,"x":399,"y":199,"o":810,"shapeType":2},{"panelId":26670,"x":299,"y":99,"o":270,"shapeType":2},{"panelId":15356,"x":399,"y":99,"o":360,"shapeType":2},{"panelId":57518,"x":200,"y":0,"o":0,"shapeType":2},{"panelId":1198,"x":300,"y":0,"o":0,"shapeType":2},{"panelId":16193,"x":400,"y":0,"o":0,"shapeType":2},{"panelId":50502,"x":500,"y":0,"o":0,"shapeType":2},{"panelId":41153,"x":500,"y":100,"o":0,"shapeType":2},{"panelId":6777,"x":500,"y":200,"o":90,"shapeType":2}]}
 const fs = require('fs'); 
 input = JSON.parse(fs.readFileSync(path.join(__dirname, '../customPanel.json'), 'utf8'));
 Data = {"numPanels":input[0],"sideLength":input[1],"positionData":input[2]}
@@ -9,24 +8,37 @@ var tinycolor = require("tinycolor2");
 
 function createPanel(list) {
     positionData = list.positionData
+    xpos = [];
     for (let i in positionData) {
         id = positionData[i].panelId;
         x = positionData[i].x;
+        xpos.push(Math.ceil(x/100)*100);
         y = positionData[i].y;
-        // o = positionData[i].o;
         type = positionData[i].shapeType;
         div = document.createElement('div'); 
         div.className = 'panel cover';
-        div.id = 'id_'+id
+        div.id = 'id_'+id;
         //show panel id in render
-        // txt = document.createTextNode(id);
-        // div.appendChild(txt);
-        document.getElementById("frame").appendChild(div);
+        txt = document.createTextNode(id);
+        div.appendChild(txt);
+        document.getElementById("container").appendChild(div);
         panel = document.getElementById('id_'+id);
         panel.style.position = "absolute";
         panel.style.left = x + 'px';
         panel.style.bottom = y + 'px';
     }
+    container = document.getElementById('container');
+    high = Math.max(...xpos).toString()
+    if(high.length>3) {
+        if(high.split('0')[0].length>=2) {
+            end = high.split('0')[0]
+        } else {
+            end = high.split('0')[0] + "0"
+        }
+    } else {
+        end = high.split('0')[0]
+    }
+    container.style.width = Number(end)+1+"00px"
 }
 
 function off(list) {
@@ -43,8 +55,8 @@ function off(list) {
 }
 
 function rotate(deg) {
-    panel = document.getElementById('frame');
-    panel.style.transform = "rotate("+deg+"deg)"
+    panel = document.getElementById('container');
+    // panel.style.transform = "rotate("+deg+"deg)"
 }
 
 function brightness(list, val, dur=0) {
