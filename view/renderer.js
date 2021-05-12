@@ -302,3 +302,32 @@ function swap() {
         
     }, 200);
 }
+
+let btn = document.querySelector('#power');
+let count = 0;
+let counter;
+
+btn.addEventListener('click',(event) => {
+    if(count>=5) {
+        clearInterval(counter)
+    } else {
+        console.log('clicked');
+        switchState()
+    }
+});
+
+btn.addEventListener('mousedown',(event) => {
+    count=0;
+    counter = setInterval(() => {
+        count++
+        console.log(count)
+    }, 1000);
+    
+});
+
+btn.addEventListener('mouseup',(event) => {
+    clearInterval(counter)
+    if(count>5) {
+        console.log('AUTHING')
+    }
+});
