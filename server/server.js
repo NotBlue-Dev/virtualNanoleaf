@@ -2,6 +2,7 @@
 let bodyParser = require('body-parser');
 const express = require("express");
 const app = express();
+const axios = require('axios');
 
 //var
 let ty;
@@ -177,30 +178,34 @@ function latest() {
 latest();
 
 function onOff(bool) {
-    if(bool == "true") {
-        if(effect != "") {
-            db1.get('SELECT * FROM effects WHERE effectsList =?', [effect], (err, row) => {
-                if (err) {
-                    return console.error(err.message);
-                }
-                Anim = JSON.parse(row.effectsData);
-                if(Anim.animType == "custom" || Anim.animType == "static") {
-                    setType('*Static*');
-                    animData(Anim);
-                } else if(effect == "*Solid*") {
-                    hsl(Data, hue,sat,light);
-                    setType('*Solid*')
-                } else {
-                    setType('plugin');
-                    setColorMode('effect');
-                    show(Anim);
-                    custom = false;
-                }
-            });
-        }
-    } else if(bool == "false"){
-        off(Data);
-    } 
+    exporter.all(function (err, all) {
+        effect = Object.values(all.selects)[0].selects;
+        if(bool == "true") {
+            if(effect != "") {
+                db1.get('SELECT * FROM effects WHERE effectsList =?', [effect], (err, row) => {
+                    if (err) {
+                        return console.error(err.message);
+                    }
+                    Anim = JSON.parse(row.effectsData);
+                    if(Anim.animType == "custom" || Anim.animType == "static") {
+                        setType('*Static*');
+                        animData(Anim);
+                    } else if(effect == "*Solid*") {
+                        hsl(Data, hue,sat,light);
+                        setType('*Solid*')
+                    } else {
+                        setType('plugin');
+                        setColorMode('effect');
+                        show(Anim);
+                        custom = false;
+                    }
+                });
+            }
+        } else if(bool == "false"){
+            off(Data);
+        } 
+    });
+    
     
 }
 

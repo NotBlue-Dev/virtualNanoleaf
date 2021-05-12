@@ -19,9 +19,10 @@ function createPanel(list) {
         div = document.createElement('div'); 
         div.className = 'panel cover';
         div.id = 'id_'+id;
-        //show panel id in render
-        txt = document.createTextNode(id);
-        div.appendChild(txt);
+        if(type == 3) {
+            txt = document.createTextNode('controller');
+            div.appendChild(txt);
+        }
         document.getElementById("container").appendChild(div);
         panel = document.getElementById('id_'+id);
         panel.style.position = "absolute";
@@ -70,23 +71,6 @@ function off(list) {
 function rotate(deg) {
     panel = document.getElementById('container');
     panel.style.transform = "rotate("+deg+"deg)"
-    // container = document.getElementById('container');
-    // console.log(deg == 0)
-    // if (deg != 0) {
-    //     high = Math.max(...ypos).toString()
-    //     if(high.length>3) {
-    //         if(high.split('0')[0].length>=2) {
-    //             end = high.split('0')[0]
-    //         } else {
-    //             end = high.split('0')[0] + "0"
-    //         }
-    //     } else {
-    //         end = high.split('0')[0]
-    //     }
-    //     container.style.height = Number(end)+1+"00px"
-    // } else {
-    //     container.style.height = null;
-    // }
 }
 
 function brightness(list, val, dur=0) {
@@ -207,4 +191,114 @@ function Solid(list, time, color) {
             latest()
         }, time*1000);
     }
+}
+
+
+function switchState() {
+    exporter.all(function (err, all) {
+        let bool = Object.values(all.one)[0].value;
+        console.log(bool)
+        if(bool == 'true') {
+            onOff("false")
+            setState("false");
+        } else {
+            onOff("true")
+            setState("true");
+        }
+        
+    });
+}
+
+function incbright() {
+    axios.put('http://localhost:16021/api/v1/VirtualDevToken/state/',{"brightness" : {"increment":10}});
+}
+
+function decbright() {
+    axios.put('http://localhost:16021/api/v1/VirtualDevToken/state/',{"brightness" : {"increment":-10}});
+}
+
+let effs = [];
+
+function next() {
+    dur = 0
+    if(effs.length==0) {
+        db1.each('SELECT effectsList FROM effects',[], function(err,row) {
+            eff = Object.values(row);
+            effs.push(eff);
+        });
+    }
+    setTimeout(() => {
+        if (mod == "effect") {
+            clearTimeout(effectTimeout);
+            clearInterval(effectInterval);
+            removeTrans(Data);
+        } 
+        if(ty == 'plugin') {
+            removeTrans(Data);
+            clearPanel(Data);
+        }
+        db1.get('SELECT * FROM effects WHERE effectsList =?', [effs[0]], (err, row) => {
+            let Anim = JSON.parse(row.effectsData);
+            if(Anim.animType == "custom" || Anim.animType == "static") {
+                animData(Anim,dur);
+            } else if (Anim.animType == "solid") {
+                setColorMode('*Solid*')
+                Solid(Data, dur, Anim.palette)
+            } else {
+                clearPanel(Data);
+                show(Anim,dur);
+            }
+            db1.run('UPDATE selects SET selects=?', [effs[0]], function(err) {
+                if (err) {
+                    return console.error('error');
+                }
+                effs.shift()
+            });
+        });
+        
+    }, 100);
+}
+
+let effswap = [];
+
+function swap() {
+    dur = 0
+    if(effswap.length==0) {
+        db1.each('SELECT effectsList FROM effects',[], function(err,row) {
+            eff = Object.values(row);
+            effswap.push(eff);
+        });
+    }
+    setTimeout(() => {
+        if (mod == "effect") {
+            clearTimeout(effectTimeout);
+            clearInterval(effectInterval);
+            removeTrans(Data);
+        } 
+        if(ty == 'plugin') {
+            removeTrans(Data);
+            clearPanel(Data);
+        }
+        rand = Math.round(Math.random() * (effswap.length-1))
+        db1.get('SELECT * FROM effects WHERE effectsList =?', [effswap[rand]], (err, row) => {
+            db1.run('UPDATE selects SET selects=?', [effswap[0]], function(err) {
+                if (err) {
+                    return console.error('error');
+                }
+                effswap.shift();
+            });
+            let Anim = JSON.parse(row.effectsData);
+            if(Anim.animType == "custom" || Anim.animType == "static") {
+                animData(Anim,dur);
+            } else if (Anim.animType == "solid") {
+                setColorMode('*Solid*')
+                Solid(Data, dur, Anim.palette)
+            } else {
+                clearPanel(Data);
+                show(Anim,dur);
+            }
+
+        });
+        
+    }, 200);
 }

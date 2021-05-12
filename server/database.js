@@ -35,6 +35,18 @@ db.serialize(function() {
         token VARCHAR  NOT NULL,
         CONSTRAINT unique_token UNIQUE (token)
     )`)
+    
+    db.get(`select count(*) from users`, function (err, result) {
+      if (Object.values(result) >=1 == false) {
+        stmt = 'INSERT INTO users VALUES (?)'
+        db.run(stmt, 'VirtualDevToken', function (err, result) {
+          if (err) {
+            return console.error(err.message);
+          }
+          setToken();
+        });
+      }
+    });
 
     //name
     db.run(`CREATE TABLE IF NOT EXISTS name (
@@ -284,13 +296,14 @@ db.serialize(function() {
     db.get(`select count(*) from selects`, function (err, result) {
       if (Object.values(result) >=1 == false) {
         stmt = 'INSERT INTO selects VALUES (?)'
-        db.run(stmt, [''], function (err, result) {
+        db.run(stmt, ['Nemo'], function (err, result) {
           if (err) {
             return console.error(err.message);
           }
         });
       }
     });
+
 
     db.get(`select count(*) from firmwareUpgrade`, function (err, result) {
       if (Object.values(result) >=1 == false) {
