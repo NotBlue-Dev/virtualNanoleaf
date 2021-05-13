@@ -9,7 +9,7 @@ Download the installer and follow the instruction
 ## Use custom layout
 
 for the moment I have not implemented a layout editor therefore you must have an existing layout and format it as follows:
-```json
+```text
 [numberOfPanel,sideLength,[positionData]]
 ```
 Eg:
