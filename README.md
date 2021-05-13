@@ -20,6 +20,7 @@ There is default layout in file
 ```json
 basicLayout
 ```
+To change layout, just copy and paste the json like above in ```customPanel.json```
 
 ## How to request the api
 the requests are made like the official api, except that instead of putting the ip of your device, you must put ```localhost```
