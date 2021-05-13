@@ -51,6 +51,10 @@ Only these one are implemented:
 
 I'm doing my best to reimplement the missing effects, some will come in the next update.
 
+## How it look
+![Capture](https://user-images.githubusercontent.com/64601123/118158043-31ee2100-b413-11eb-9b3b-f861b726eced.PNG)
+
+
 ## Know issue
 - SSDP Search show more than 1 virtual nanoleaf
 - Force refresh the app will cause it to broke
