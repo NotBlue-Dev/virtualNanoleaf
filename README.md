@@ -17,6 +17,7 @@ Eg:
 [9,0,[{"panelId":33367,"x":300,"y":100,"o":0,"shapeType":3},{"panelId":21896,"x":200,"y":100,"o":270,"shapeType":2},{"panelId":26596,"x":300,"y":200,"o":0,"shapeType":2},{"panelId":25586,"x":200,"y":200,"o":270,"shapeType":2},{"panelId":48228,"x":100,"y":200,"o":360,"shapeType":2},{"panelId":28795,"x":100,"y":300,"o":450,"shapeType":2},{"panelId":32792,"x":0,"y":300,"o":540,"shapeType":2},{"panelId":17663,"x":100,"y":400,"o":450,"shapeType":2},{"panelId":40130,"x":200,"y":300,"o":540,"shapeType":2}]]
 ```
 There is default layout in file ```basicLayout```
+
 To change layout, just copy and paste the json like above in ```customPanel.json```
 
 ## How to request the api
