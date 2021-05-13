@@ -22,24 +22,29 @@ module.exports = (function() {
         extended: true
     }));
     router.use(bodyParser.json());
-    router.post("/api/v1/new", (req, res, next) => {
-        res.contentType('application/json');
-        let token = ""
-        token = maketoken(32);
-        stmt = 'INSERT INTO users VALUES (?)';
-        db1.run(stmt, token, function (err, result) {
-            if (err){
-                res.status(400).json({"error": err.message});
-                return;
+        router.post("/api/v1/new", (req, res, next) => {
+            if(auth == true) {
+                res.contentType('application/json');
+                let token = ""
+                token = maketoken(32);
+                stmt = 'INSERT INTO users VALUES (?)';
+                db1.run(stmt, token, function (err, result) {
+                    if (err){
+                        res.status(400).json({"error": err.message});
+                        return;
+                    }
+                    res.json({
+                        "auth_token": token
+                    })
+                });
+                setTimeout(() => {
+                    setToken();
+                }, 100);
+            } else {
+                res.status(401)
+                res.json()
             }
-            res.json({
-                "auth_token": token
-            })
         });
-        setTimeout(() => {
-            setToken();
-        }, 100);
-    });
 
     return router;
 })();

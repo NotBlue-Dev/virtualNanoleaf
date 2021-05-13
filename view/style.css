@@ -51,6 +51,8 @@ body {
 
 .icon {
     margin-right: 2.5vh;
+    height: 55px;
+    border-radius: 14px;
 }
 
 @media screen and ( min-height: 800px) and (max-height:900px) {

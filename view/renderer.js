@@ -197,7 +197,6 @@ function Solid(list, time, color) {
 function switchState() {
     exporter.all(function (err, all) {
         let bool = Object.values(all.one)[0].value;
-        console.log(bool)
         if(bool == 'true') {
             onOff("false")
             setState("false");
@@ -311,7 +310,6 @@ btn.addEventListener('click',(event) => {
     if(count>=5) {
         clearInterval(counter)
     } else {
-        console.log('clicked');
         switchState()
     }
 });
@@ -320,7 +318,6 @@ btn.addEventListener('mousedown',(event) => {
     count=0;
     counter = setInterval(() => {
         count++
-        console.log(count)
     }, 1000);
     
 });
@@ -328,6 +325,61 @@ btn.addEventListener('mousedown',(event) => {
 btn.addEventListener('mouseup',(event) => {
     clearInterval(counter)
     if(count>5) {
-        console.log('AUTHING')
+        auth = true;
+        Searching()
+        setTimeout(() => {
+            auth = false; 
+        }, 30000);
     }
 });
+
+function Searching() {
+    let ani;
+    music = document.getElementById('music');
+    swape = document.getElementById('swap');
+    nexte = document.getElementById('next');
+    less = document.getElementById('less');
+    more = document.getElementById('more');
+    lis = ['music','swape','nexte','less','more']
+    let i = 0
+    function start() {
+        ani = setInterval(() => {
+            if(i<=4) {
+                eval(lis[i]).style.backgroundColor='white'
+                if(i!=0) {
+                    eval(lis[i-1]).style.backgroundColor=''
+                }
+                i++
+            } else {
+                back()
+                i = i - 1
+                clearInterval(ani)
+            }
+        }, 400);
+    }
+    function back() {
+        ani2 = setInterval(() => {
+            if(i!=-1) {
+                eval(lis[i]).style.backgroundColor='white'
+                if(i!=4) {
+                    eval(lis[i+1]).style.backgroundColor=''    
+                }
+                i--
+            } else {
+                start()
+                i = 0
+                clearInterval(ani2)
+            }
+        }, 400);
+    }
+    start()
+    setTimeout(() => {
+        clearInterval(ani)
+        clearInterval(ani2)
+        for(x=0; x < 4 ;x++) {
+            eval(lis[x]).style.backgroundColor=''
+        }
+    }, 30000);
+}
+
+//need to finish this anim
