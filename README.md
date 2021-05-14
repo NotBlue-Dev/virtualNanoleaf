@@ -4,7 +4,7 @@ NanoVirtz is an Nanoleaf Emulator allowing you to do api request like on real de
 
 ## Installation
 
-Download the installer and follow the instruction
+Download the installer here https://github.com/NotBlue-Dev/virtualNanoleaf/releases
 
 ## Use custom layout
 
