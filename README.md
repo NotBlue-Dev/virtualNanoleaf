@@ -62,4 +62,4 @@ I'm doing my best to reimplement the missing effects, some will come in the next
 - Some transitions are glitchy (colors appear from the last effects)
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](LICENSE.md)
