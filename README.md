@@ -33,7 +33,7 @@ VirtualDevToken
 
 ## Api difference
 This project is a recreation of the api, therefore some functions are not implemented, here is the list:
-- External Control
+- External Control (UDP) but animData are implemented
 - Rythm
 - Event
 - mDNS discovery
