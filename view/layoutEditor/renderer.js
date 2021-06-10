@@ -1,6 +1,18 @@
 
+//choix layout ou create
+
+//create => save => use it
+
+//choix => use it
+
+
+
+const fs = require('fs');
+
 const AllowTopLevel = false;
 const CellSize = new go.Size(50, 50);
+
+let dic;
 
 function updateCanvas(){
   const w = document.documentElement.clientWidth;
@@ -15,9 +27,29 @@ window.addEventListener("resize", updateCanvas);
 
 updateCanvas();
 
+function save() {
+
+  const data = JSON.stringify(dic);
+  fs.writeFile('./layout/design.json', data, 'utf8', (err) => {
+    if (err) {
+        console.log(`Error writing file: ${err}`);
+    } else {
+        console.log(`File is written successfully!`);
+    }
+    document.location.href="../index.html"
+});
+}
 
 function init() {
   const $ = go.GraphObject.make;
+
+  sideLength = 100;
+  let numPanels;
+  let panelId;
+  let x;
+  let y;
+  o = 0;
+  let shapeType;
 
   myDiagram =
     $(go.Diagram, "myDiagramDiv",
@@ -33,7 +65,18 @@ function init() {
 
         "ModelChanged": function(e) {
           if (e.isTransactionFinished) {
-            console.log(myDiagram.model.toJson());
+            data = JSON.parse(myDiagram.model.toJson())
+            canva = data.nodeDataArray[0]
+            numPanels = data.nodeDataArray.length-1;
+            dic = [numPanels, sideLength, []]
+            for (let i = 1; i<data.nodeDataArray.length; i++) {
+              shapeType = 2;
+              panelId = data.nodeDataArray[i].key.split('g')[1] * 12
+              if (data.nodeDataArray[i].key == 'g') {panelId = 6; shapeType = 3;}
+              x = data.nodeDataArray[i].pos.split(' ')[0]
+              y = data.nodeDataArray[i].pos.split(' ')[1]
+              dic[2].push({"panelId":panelId,"x":x,"y":y,"o":o,"shapeType":shapeType})
+            }
           }
         },
         "animationManager.isEnabled": false,
@@ -138,7 +181,7 @@ function init() {
       }
     }
   };
-
+  
   myDiagram.mouseDrop = function(e) {
     if (AllowTopLevel) {
       if (!e.diagram.commandHandler.addTopLevelParts(e.diagram.selection, true)) {
@@ -169,5 +212,11 @@ function init() {
   myPaletteBig.model = new go.GraphLinksModel([
     { key: "g", color: green, size: "100 100" },
   ]);
+
+  
 }
+
+function undo() {myDiagram.commandHandler.undo()}
+function redo() {myDiagram.commandHandler.undo()}
+
 window.addEventListener('DOMContentLoaded', init);

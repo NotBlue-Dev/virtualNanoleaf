@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Main Window</title>
+    <title>Layout Editor</title>
     <link rel='stylesheet' href="style.css">
     <script src="https://unpkg.com/gojs/release/go-debug.js"></script>
     
@@ -13,6 +13,18 @@
         <span id='big' style="display: inline-block; vertical-align: top; float: left;">
             <div>
               <div id="myPaletteBig" style="width: 120px; height: 120px"></div>
+            </div>
+            <div>
+              <a onclick="undo()">Undo</a>
+            </div>
+            <div>
+              <a onclick="redo()">Redo</a>
+            </div>
+            <div>
+              <a onclick="location.reload()">reload</a>
+            </div>
+            <div>
+              <a onclick="save()">save</a>
             </div>
           </div>
         </span>

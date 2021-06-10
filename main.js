@@ -13,7 +13,7 @@ function createWindow () {
   })
   mainWindow.setMinimumSize(1300, 750);
   mainWindow.openDevTools({detach:true});
-  // mainWindow.loadFile('view/display/index.html');
+  // mainWindow.loadFile('view/index.html');
   mainWindow.loadFile('view/layoutEditor/index.html');
 }
 
