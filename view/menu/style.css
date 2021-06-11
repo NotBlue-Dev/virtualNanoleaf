@@ -10,9 +10,11 @@ body {
 hr {
   border-top: 1px solid #707070;
   border-bottom: 1px;
+  margin: 0;
 }
 
 .container {
+  overflow-y: auto;
   height: 93vh;
   margin-left:70px;
   border-radius: 20px;
@@ -43,4 +45,37 @@ hr {
 
 .btncontain {
 
+}
+
+#layouts {
+  display: flex;
+}
+
+.card {
+  background-color: #DDE7EB;
+  margin: 10px;
+  font-size: 30px;
+  border-radius: 12px;
+  border: solid 1px #707070;
+}
+
+.preview img {
+  width: 100%;
+}
+
+.preview {
+  background: #9BA7AD;
+  border-radius: 12px;
+}
+
+.topcard {
+  padding: 20px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 16px;
+  color: #707070;
 }

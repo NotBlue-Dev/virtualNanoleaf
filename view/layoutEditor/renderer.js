@@ -11,6 +11,7 @@ const fs = require('fs');
 const prompt = require('electron-prompt');
 const AllowTopLevel = false;
 const CellSize = new go.Size(50, 50);
+const path = require('path');
 
 let dic;
 
@@ -22,6 +23,8 @@ function updateCanvas(){
   div.style.height = h+"px"
   div.style.width = w-span.offsetWidth+"px"
 }
+
+
 
 window.addEventListener("resize", updateCanvas);
 
@@ -47,7 +50,10 @@ function save() {
               console.log(`File is written successfully!`);
           }
         });
-        fs.writeFile(`./layout/${r}.json`, data, 'utf8', (err) => {
+        dir = Buffer.from(r, 'utf-8').toString('hex')
+        sessionStorage.setItem('name', r)
+        fs.mkdirSync(path.join(__dirname, `../../layout/${dir}`))
+        fs.writeFile(`./layout/${dir}/${r}.json`, data, 'utf8', (err) => {
           if (err) {
               console.log(`Error writing file: ${err}`);
           } else {

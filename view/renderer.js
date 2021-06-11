@@ -1,5 +1,6 @@
 
 const path = require('path');
+const html2canvas = require('html2canvas');
 let ypos = [];
 let xpos = [];
 const fs = require('fs'); 
@@ -53,6 +54,19 @@ function createPanel(list) {
         yheight = height.split('0')[0]
     }
     container.style.height = Number(yheight)+1+"00px"
+    html2canvas(document.querySelector("#all")).then(canvas => {
+        data = canvas.toDataURL()
+        r = sessionStorage.getItem('name')
+        dir = Buffer.from(r, 'utf-8').toString('hex')
+        console.log(dir)
+        fs.writeFile(`./layout/${dir}/preview.txt`, data, 'utf8', (err) => {
+            if (err) {
+                console.log(`Error writing file: ${err}`);
+            } else {
+                console.log(`File is written successfully!`);
+            }
+          });
+    });
 }
 
 function off(list) {
@@ -381,5 +395,7 @@ function Searching() {
         }
     }, 30000);
 }
+
+
 
 //need to finish this anim
