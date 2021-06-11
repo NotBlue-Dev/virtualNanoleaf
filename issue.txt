@@ -1,0 +1,2 @@
+can't show layout two time, crash the second time
+pos not center if first block not on 00
