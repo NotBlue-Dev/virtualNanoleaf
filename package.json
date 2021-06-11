@@ -17,6 +17,7 @@
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "color-temperature": "^0.2.7",
+    "electron-prompt": "^1.6.2",
     "express": "^4.17.1",
     "gojs": "^2.1.41",
     "inquirer": "^8.0.0",

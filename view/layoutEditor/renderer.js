@@ -8,7 +8,7 @@
 
 
 const fs = require('fs');
-
+const prompt = require('electron-prompt');
 const AllowTopLevel = false;
 const CellSize = new go.Size(50, 50);
 
@@ -30,14 +30,34 @@ updateCanvas();
 function save() {
 
   const data = JSON.stringify(dic);
-  fs.writeFile('customPanel.json', data, 'utf8', (err) => {
-    if (err) {
-        console.log(`Error writing file: ${err}`);
-    } else {
-        console.log(`File is written successfully!`);
-    }
-    document.location.href="../index.html"
-});
+
+  prompt({
+    title: 'Name your layout',
+    label: 'Give a name to the file',
+    value: 'eg: Design Test 1',
+    type: 'input'
+  }).then((r) => {
+      if(r === null) {
+          console.log('user cancelled');
+      } else {
+        fs.writeFile('customPanel.json', data, 'utf8', (err) => {
+          if (err) {
+              console.log(`Error writing file: ${err}`);
+          } else {
+              console.log(`File is written successfully!`);
+          }
+        });
+        fs.writeFile(`./layout/${r}.json`, data, 'utf8', (err) => {
+          if (err) {
+              console.log(`Error writing file: ${err}`);
+          } else {
+              console.log(`File is written successfully!`);
+              document.location.href="../index.html"
+          }
+        });
+      }
+  })
+  .catch(console.error);
 }
 
 function init() {
