@@ -30,7 +30,7 @@ updateCanvas();
 function save() {
 
   const data = JSON.stringify(dic);
-  fs.writeFile('./layout/design.json', data, 'utf8', (err) => {
+  fs.writeFile('customPanel.json', data, 'utf8', (err) => {
     if (err) {
         console.log(`Error writing file: ${err}`);
     } else {
@@ -56,8 +56,8 @@ function init() {
       {
         grid: $(go.Panel, "Grid",
           { gridCellSize: CellSize },
-          $(go.Shape, "LineH", { stroke: "lightgray" }),
-          $(go.Shape, "LineV", { stroke: "lightgray" })
+          $(go.Shape, "LineH", { stroke: "#707070" }),
+          $(go.Shape, "LineV", { stroke: "#707070" })
         ),
         "draggingTool.isGridSnapEnabled": true,
         "draggingTool.gridSnapCellSpot": go.Spot.Center,
@@ -89,9 +89,10 @@ function init() {
         resizable: false, resizeObjectName: "SHAPE",
     
         locationSpot: new go.Spot(0, 0, CellSize.width / 2, CellSize.height / 2),
+        
         mouseDragEnter: function(e, node) {
           e.handled = true;
-          node.findObject("SHAPE").fill = "red";
+          node.findObject("SHAPE").fill = "#cc0000";
           e.diagram.currentCursor = "not-allowed";
           highlightGroup(node.containingGroup, false);
         },
@@ -102,24 +103,25 @@ function init() {
           node.diagram.currentTool.doCancel();
         }
       },
+     
       
       new go.Binding("position", "pos", go.Point.parse).makeTwoWay(go.Point.stringify),
 
-      $(go.Shape, "Rectangle",
+      $(go.Shape, "RoundedRectangle",
         {
           name: "SHAPE",
           fill: "white",
+          stroke:'#FFFFFF',
+          parameter1:3,
+          strokeWidth: 3,
           minSize: CellSize,
           desiredSize: CellSize
         },
         new go.Binding("fill", "color"),
         new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(go.Size.stringify)),
-
-
-      $(go.TextBlock,
-        { alignment: go.Spot.Center, font: 'bold 16px sans-serif' },
-        new go.Binding("text", "key"))
     );  
+
+
 
   function highlightGroup(grp, show) {
     if (!grp) return false;
@@ -128,10 +130,10 @@ function init() {
     return grp.isHighlighted;
   }
 
-  const groupFill = "rgba(128,128,128,0.2)";
-  const groupStroke = "gray";
-  const dropFill = "rgba(128,255,255,0.2)";
-  const dropStroke = "red";
+  const groupFill = "rgba(112,112,112,0.3)";
+  const groupStroke = "rgba(112,112,112,0.3)";
+  const dropFill = "rgba(36,36,36,0.3)";
+  const dropStroke = "rgba(36,36,36,0.3)";
 
   myDiagram.groupTemplate =
     $(go.Group,
@@ -200,8 +202,6 @@ function init() {
     { key: "G1", isGroup: true, pos: "0 0", size: "1000 500" },
   ]);
 
-  const green = '#B2FF59';
-
   myPaletteBig =
     $(go.Palette, "myPaletteBig",
       { 
@@ -210,13 +210,14 @@ function init() {
       });
 
   myPaletteBig.model = new go.GraphLinksModel([
-    { key: "g", color: green, size: "100 100" },
+    { key: "g", color: '#DADEE1', size: "100 100" },
   ]);
 
-  
 }
 
 function undo() {myDiagram.commandHandler.undo()}
-function redo() {myDiagram.commandHandler.undo()}
+function redo() {myDiagram.commandHandler.redo()}
 
 window.addEventListener('DOMContentLoaded', init);
+
+//need to start  0 0

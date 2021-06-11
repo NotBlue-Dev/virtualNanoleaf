@@ -1,5 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap');
+
 body {
-  background-color: #9ba7ad;
+  background-color: #A8B4BA;
   margin: 0px;
   overflow: hidden;
+  font-family: 'Montserrat', sans-serif;
+}
+
+#myDiagramDiv {
+  background-color: #9BA7AD;
+  border: 1px solid black;
+  height: 1080px;
+}
+
+.icone {
+  position: absolute;
+  left: 43px;
 }
