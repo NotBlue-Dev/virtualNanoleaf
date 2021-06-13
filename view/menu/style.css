@@ -49,10 +49,16 @@ hr {
 
 #layouts {
   display: flex;
+  flex-wrap: wrap;
+  padding-left: 43px;
+  padding-top: 30px;
+  padding-right: 40px;
+  justify-content: center;
 }
 
 .card {
-  background-color: #DDE7EB;
+  background: #9BA7AD;
+  width: 23%;
   margin: 10px;
   font-size: 30px;
   border-radius: 12px;
@@ -64,11 +70,13 @@ hr {
 }
 
 .preview {
-  background: #9BA7AD;
   border-radius: 12px;
 }
 
 .topcard {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  background-color: #DDE7EB;
   padding: 20px;
   display: flex;
   align-items: baseline;
