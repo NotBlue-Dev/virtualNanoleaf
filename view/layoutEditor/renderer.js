@@ -43,7 +43,7 @@ function save() {
       if(r === null) {
           console.log('user cancelled');
       } else {
-        fs.writeFile('customPanel.json', data, 'utf8', (err) => {
+        fs.writeFile(path.join(__dirname, `../../customPanel.json`), data, 'utf8', (err) => {
           if (err) {
               console.log(`Error writing file: ${err}`);
           } else {
@@ -53,7 +53,7 @@ function save() {
         dir = Buffer.from(r, 'utf-8').toString('hex')
         sessionStorage.setItem('name', r)
         fs.mkdirSync(path.join(__dirname, `../../layout/${dir}`))
-        fs.writeFile(`./layout/${dir}/${r}.json`, data, 'utf8', (err) => {
+        fs.writeFile(path.join(__dirname, `../../layout/${dir}/${r}.json`), data, 'utf8', (err) => {
           if (err) {
               console.log(`Error writing file: ${err}`);
           } else {

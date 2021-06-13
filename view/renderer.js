@@ -58,8 +58,7 @@ function createPanel(list) {
         data = canvas.toDataURL()
         r = sessionStorage.getItem('name')
         dir = Buffer.from(r, 'utf-8').toString('hex')
-        console.log(dir)
-        fs.writeFile(`./layout/${dir}/preview.txt`, data, 'utf8', (err) => {
+        fs.writeFile(path.join(__dirname, `../layout/${dir}/preview.txt`), data, 'utf8', (err) => {
             if (err) {
                 console.log(`Error writing file: ${err}`);
             } else {

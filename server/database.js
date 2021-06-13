@@ -1,6 +1,7 @@
 
-var sqlite3 = require('sqlite3');
+var sqlite3 = require('sqlite3').verbose();
 const fs = require('fs'); 
+const path = require('path')
 const DBSOURCE = "db.sqlite"
 input = JSON.parse(fs.readFileSync(path.join(__dirname, '../customPanel.json'), 'utf8'));
 data = [input[0],input[1], JSON.stringify(input[2])];
@@ -419,7 +420,7 @@ db.serialize(function() {
         });
       }
     });
-
 });
 
 module.exports = db
+

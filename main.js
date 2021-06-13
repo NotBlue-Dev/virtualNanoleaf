@@ -1,6 +1,7 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 
+
 function createWindow () {
   const mainWindow = new BrowserWindow({
     width: 800,
@@ -9,6 +10,7 @@ function createWindow () {
       nodeIntegration: true,
       contextIsolation: false,
       enableRemoteModule: true,
+      
     }
   })
   mainWindow.setMinimumSize(1300, 750);
@@ -18,6 +20,7 @@ function createWindow () {
   mainWindow.loadFile('view/menu/index.html');
 }
 
+app.allowRendererProcessReuse = false;
 app.whenReady().then(() => {
   createWindow()
   

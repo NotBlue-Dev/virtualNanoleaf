@@ -1,7 +1,6 @@
 
 
-
-function Random(json,dur) {
+   function Random(json,dur) {
     let delayTime;
     let Defaultloop = {"name":"loop", "value":true};
     let transTime; //1 = 10ms
@@ -70,4 +69,4 @@ function Random(json,dur) {
         }, dur*1000);
     }
 });
-}
+   }

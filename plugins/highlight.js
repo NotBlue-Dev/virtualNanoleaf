@@ -1,6 +1,5 @@
 let effectInterval;
 let effectTimeout;
-
 function Highlight(json,dur) {
     let delayTime;
     let Defaultloop = {"name":"loop", "value":true};

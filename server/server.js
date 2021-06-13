@@ -1,9 +1,21 @@
-// Create express app
+
 let bodyParser = require('body-parser');
 const express = require("express");
-const app = express();
 const axios = require('axios');
 
+const app = express();
+
+//PROBLEME QUI CAUSE CRASH
+const db1 = require('../server/database.js');
+
+
+const SqliteToJson = require('sqlite-to-json');
+const exporter = new SqliteToJson({
+    client: db1
+});
+
+
+// Create express app
 //var
 let ty;
 let auth = false;
@@ -12,12 +24,6 @@ pluginLegacy = ["6970681a-20b5-4c5e-8813-bdaebc4ee4fa","027842e4-e1d6-4a4c-a731-
 input = JSON.parse(fs.readFileSync(path.join(__dirname, '../customPanel.json'), 'utf8'));
 Data = {"numPanels":input[0],"sideLength":input[1],"positionData":input[2]};
 
-//Db
-const db1 = require('../server/database.js');
-const SqliteToJson = require('sqlite-to-json');
-const exporter = new SqliteToJson({
-    client: db1
-});
 
 //App
 app.use(bodyParser.urlencoded({
@@ -94,7 +100,7 @@ app.use('/', hues)
 const HTTP_PORT = 16021;
 
 // Start server
-app.listen(HTTP_PORT, () => {
+const serv = app.listen(HTTP_PORT, () => {
     console.log("Server running on port %PORT%".replace("%PORT%",HTTP_PORT));
 });
 
@@ -214,19 +220,29 @@ function onOff(bool) {
 
 //show 3 ssdp device instead of one
 let Server = require('node-ssdp').Server, server = new Server({
-  udn : 'uuid:123456-1234-1234-123456789abc',
-  location: 'http://localhost:16021',
-  ttl:60,
-  adInterval:30000
+udn : 'uuid:123456-1234-1234-123456789abc',
+location: 'http://localhost:16021',
+ttl:60,
+adInterval:30000
 });
 
 server.addUSN('nanoleaf:nl29');
 
 server.start();
 
+function exit() {
+    console.log(db1.close())
+    serv.close()
+    server.stop()
+}
+
+document.getElementById("menu").addEventListener("click", exit);
+
+
+
 // Flow 2+ chosen colors gradually mix into each other as if flowing paint is mixing	transTime, delay time, loop, LinDirection
 // Wheel Color gradient cycles across panels in a user specified direction	transTime, loop, LinDirection
 
 // Fade	Colors cycle across panels in sync	transTime, delay time, loop
 // Explode	Similar to flow, but the colors move out from the centre of the panel system, rather than the edge	transTime, delay time, loop
-	
+

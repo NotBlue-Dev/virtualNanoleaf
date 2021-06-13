@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path')
 
-const dir = "./layout"
+const dir = path.join(__dirname, "../../layout")
 
 fs.readdir(dir, (err, files) => {
   if(err) throw err;
@@ -38,5 +38,4 @@ fs.readdir(dir, (err, files) => {
     }
     document.getElementById("layouts").appendChild(card)
   })
-
 })

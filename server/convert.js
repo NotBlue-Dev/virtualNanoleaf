@@ -1,5 +1,6 @@
 // ### CONVERTION ### //
 
+
 function colorTemperatureToRGB(kelvin){
     //thx to paulkaplan
     let temp = kelvin / 100;
@@ -40,7 +41,7 @@ function rgb2hsl(rgbArr){
     let r1 = rgbArr[0] / 255;
     let g1 = rgbArr[1] / 255;
     let b1 = rgbArr[2] / 255;
- 
+    
     let maxColor = Math.max(r1,g1,b1);
     let minColor = Math.min(r1,g1,b1);
     //Calculate L:
@@ -87,11 +88,11 @@ function getRandomSubarray(arr, size) {
 }
 
 //randomization
-function getRandomInt(min, max) {
+function getRandomInt (min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
-  }
+}
 
 //get index of element
 function findWithAttr(array, attr, value) {
