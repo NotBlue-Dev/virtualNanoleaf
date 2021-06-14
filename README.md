@@ -22,7 +22,7 @@ VirtualDevToken
 ```
 
 ## Api difference
-This project is a recreation of the api, therefore some functions are not implemented, here is the list:
+This project is a recreation of the nanoleaf api, (https://forum.nanoleaf.me/docs) therefore some functions are not implemented, here is the list:
 - External Control (UDP) but animData are implemented
 - Rythm
 - Event
