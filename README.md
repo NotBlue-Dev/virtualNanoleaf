@@ -50,6 +50,9 @@ Layout Editor
 New Menu
 ![2](https://user-images.githubusercontent.com/64601123/121945388-93522a00-cd08-11eb-8502-eb17bec82e02.PNG)
 
+## Quick Demo
+https://youtu.be/KphMoSbREWo
+
 ## Know issue
 - SSDP Search show more than 1 virtual nanoleaf
 - Some transitions are glitchy (colors appear from the last effects)
