@@ -1,3 +1,5 @@
+(I used var on this project, what a shame)
+
 # NanoVirtz
 
 NanoVirtz is a Nanoleaf Emulator allowing you to do api request and render it in real time, so you can test your external scripts for nanoleafs on different layout
