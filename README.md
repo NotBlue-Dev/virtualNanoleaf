@@ -1,6 +1,6 @@
 # NanoVirtz
 
-NanoVirtz is an Nanoleaf Emulator allowing you to do api request like on real device and see the rendering in real time, so you can test your external scripts for nanoleafs on different layout
+NanoVirtz is a Nanoleaf Emulator allowing you to do api request and render it in real time, so you can test your external scripts for nanoleafs on different layout
 
 ## Installation
 
